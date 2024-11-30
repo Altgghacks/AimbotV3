@@ -1,0 +1,209 @@
+--Made by ZpG you zesty fuckers
+
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+	Name = "Lx Hub│Aimbot│V2",
+	LoadingTitle = "Script loading...",
+	LoadingSubtitle = "by ZpG",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = "Aimbot",
+		FileName = "byZpG"
+	},
+
+Discord = {
+	Enabled = true,
+	Invite = "D7pjjn9dbU", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+	RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+ },
+ KeySystem = true, -- Set this to true to use our key system
+ KeySettings = {
+	Title = "Key | Lx Hub",
+	Subtitle = "Lx Hub's Key System",
+	Note = "Key In The Unknown Discord Server",
+	FileName = "Lx Hub", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+	SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+	GrabKeyFromSite = true, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+	Key = {"https://pastebin.com/raw/FfTnYhNT"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+ }
+})
+
+local MainTab = Window:CreateTab("Main Tab", nil) -- Title, Image
+local MainSection = MainTab:CreateSection("Main")
+
+Rayfield:Notify({
+ Title = "Lx Hub has been executed",
+ Content = "Welcome ;)",
+ Duration = 5,
+ Image = 13047715178,
+ Actions = { -- Notification Buttons
+	Ignore = {
+	   Name = "Okay!",
+	   Callback = function()
+	   print("The user tapped Okay!")
+	end
+ },
+},
+})
+
+local Button = MainTab:CreateButton({
+	Name = "Aimbot 🏹",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/Aimbot-V2/main/Resources/Scripts/Raw%20Main.lua"))()
+		getgenv().Aimbot.Settings.Enabled = true
+		getgenv().Aimbot.FOVSettings.Sides = 16
+		getgenv().Aimbot.FOVSettings.Visible = true
+		getgenv().Aimbot.FOVSettings.Thickness = 1
+	end,
+ })
+
+ local Button = MainTab:CreateButton({
+	Name = "Noclip Tool",
+	Callback = function()
+		local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local StarterGui = game:GetService("StarterGui")
+local player = Players.LocalPlayer
+local noclip = false
+local connection
+ 
+local function notify(message)
+    StarterGui:SetCore("SendNotification", {
+        Title = "Notification";
+        Text = message;
+        Duration = 3;
+    })
+end
+ 
+local function toggleNoclip()
+    noclip = not noclip
+    if noclip then
+        connection = RunService.Stepped:Connect(function()
+            for _, part in pairs(player.Character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
+        end)
+        notify("noclip on, by thebestpersol. Enjoy!")
+    else
+        if connection then
+            connection:Disconnect()
+        end
+        for _, part in pairs(player.Character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.CanCollide = true
+            end
+        end
+        notify("noclip off, by thebestpersol. Enjoy!")
+    end
+end
+ 
+local function createTool()
+    local tool = Instance.new("Tool")
+    tool.Name = "Noclip Tool"
+    tool.RequiresHandle = false
+    tool.CanBeDropped = false
+    tool.Parent = player:WaitForChild("Backpack")
+ 
+    tool.Activated:Connect(function()
+        toggleNoclip()
+    end)
+end
+ 
+local function onCharacterAdded()
+    wait(0.1)
+    createTool()
+end
+ 
+if player.Character then
+    onCharacterAdded()
+end
+ 
+player.CharacterAdded:Connect(onCharacterAdded)
+   end,
+})
+
+local function notify(message)
+    StarterGui:SetCore("SendNotification", {
+        Title = "Notification";
+        Text = message;
+        Duration = 3;
+    })
+end
+ 
+local Button = MainTab:CreateButton({
+	Name = "Teleport Tool",
+	Callback = function()
+        mouse = game.Players.LocalPlayer:GetMouse()
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "TP Tool"
+tool.Activated:connect(function()
+local pos = mouse.Hit+Vector3.new(0,2.5,0)
+pos = CFrame.new(pos.X,pos.Y,pos.Z)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+	end,
+ })
+
+
+local Button = MainTab:CreateButton({
+ Name = "Infinite Jump Toggle",
+ Callback = function()
+	 --Toggles the infinite jump between on or off on every script run
+_G.infinjump = not _G.infinjump
+
+if _G.infinJumpStarted == nil then
+  --Ensures this only runs once to save resources
+  _G.infinJumpStarted = true
+  
+  --Notifies readiness
+  game.StarterGui:SetCore("SendNotification", {Title="Youtube Hub"; Text="Infinite Jump Activated!"; Duration=5;})
+
+  --The actual infinite jump
+  local plr = game:GetService('Players').LocalPlayer
+  local m = plr:GetMouse()
+  m.KeyDown:connect(function(k)
+	  if _G.infinjump then
+		  if k:byte() == 32 then
+		  humanoid = game:GetService'Players'.LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+		  humanoid:ChangeState('Jumping')
+		  wait()
+		  humanoid:ChangeState('Seated')
+		  end
+	  end
+  end)
+end
+ end,
+})
+
+--Walk speed slider
+
+local Slider = MainTab:CreateSlider({
+ Name = "WalkSpeed Slider",
+ Range = {1, 350},
+ Increment = 1,
+ Suffix = "Speed",
+ CurrentValue = 16,
+ Flag = "sliderws", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+ Callback = function(Value)
+	  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
+ end,
+})
+
+--Jump slider
+
+local Slider = MainTab:CreateSlider({
+ Name = "JumpPower Slider",
+ Range = {1, 350},
+ Increment = 1,
+ Suffix = "Speed",
+ CurrentValue = 16,
+ Flag = "sliderjp", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+ Callback = function(Value)
+	  game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
+ end,
+})
