@@ -30,13 +30,15 @@ Discord = {
 })
 
 local MainTab = Window:CreateTab("Main Tab", nil) -- Title, Image
+local OtherTab = Window:CreateTab("Other Tab", nil) -- Title, Image
 local MainSection = MainTab:CreateSection("Main")
+local OtherSection = OtherTab:CreateSection("Other")
 
 Rayfield:Notify({
  Title = "Lx Hub has been executed",
  Content = "Welcome ;)",
  Duration = 5,
- Image = 13047715178,
+ Image = nil,
  Actions = { -- Notification Buttons
 	Ignore = {
 	   Name = "Okay!",
@@ -59,6 +61,42 @@ local Button = MainTab:CreateButton({
  })
 
  local Button = MainTab:CreateButton({
+	Name = "Head Hitbox Expander 📦",
+	Callback = function()
+	    -- you can also enable collision, change expand part (head to torso), change transparency and size as well
+_G.HeadSize = 20 _G.Disabled = true game:GetService('RunService').RenderStepped:connect(function() if _G.Disabled then for i,v in next, game:GetService('Players'):GetPlayers() do if v.Name ~= game:GetService('Players').LocalPlayer.Name then pcall(function() v.Character.Head.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize) v.Character.Head.Transparency = 0.97 v.Character.Head.BrickColor = BrickColor.new("White") v.Character.Head.Material = "Neon" v.Character.Head.CanCollide = false v.Character.Head.Massless = true end) end end end end)
+    end,
+ })
+
+ local Button = MainTab:CreateButton({
+	Name = "Torse Hitbox Expander 📦",
+	Callback = function()
+        _G.TorsoSize = Vector3.new(15, 15, 15) 
+        _G.Disabled = true
+        
+        game:GetService('RunService').RenderStepped:Connect(function()
+            if _G.Disabled then
+                for i, v in next, game:GetService('Players'):GetPlayers() do
+                    if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+                        pcall(function()
+                            local torso = v.Character:FindFirstChild("Torso") or v.Character:FindFirstChild("UpperTorso")
+                            if torso then
+                                torso.Size = _G.TorsoSize
+                                torso.Transparency = 0.97
+                                torso.BrickColor = BrickColor.new("Red")
+                                torso.Material = "Neon"
+                                torso.CanCollide = false
+                                torso.Massless = true
+                            end
+                        end)
+                    end
+                end
+            end
+        end)
+	end,
+ })
+
+ local Button = OtherTab:CreateButton({
 	Name = "Noclip Tool",
 	Callback = function()
 		local Players = game:GetService("Players")
@@ -100,7 +138,7 @@ local function toggleNoclip()
     end
 end
  
-local function createTool()
+local function createTool()-
     local tool = Instance.new("Tool")
     tool.Name = "Noclip Tool"
     tool.RequiresHandle = false
@@ -133,7 +171,7 @@ local function notify(message)
     })
 end
  
-local Button = MainTab:CreateButton({
+local Button = OtherTab:CreateButton({
 	Name = "Teleport Tool",
 	Callback = function()
         mouse = game.Players.LocalPlayer:GetMouse()
@@ -148,62 +186,3 @@ end)
 tool.Parent = game.Players.LocalPlayer.Backpack
 	end,
  })
-
-
-local Button = MainTab:CreateButton({
- Name = "Infinite Jump Toggle",
- Callback = function()
-	 --Toggles the infinite jump between on or off on every script run
-_G.infinjump = not _G.infinjump
-
-if _G.infinJumpStarted == nil then
-  --Ensures this only runs once to save resources
-  _G.infinJumpStarted = true
-  
-  --Notifies readiness
-  game.StarterGui:SetCore("SendNotification", {Title="Youtube Hub"; Text="Infinite Jump Activated!"; Duration=5;})
-
-  --The actual infinite jump
-  local plr = game:GetService('Players').LocalPlayer
-  local m = plr:GetMouse()
-  m.KeyDown:connect(function(k)
-	  if _G.infinjump then
-		  if k:byte() == 32 then
-		  humanoid = game:GetService'Players'.LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
-		  humanoid:ChangeState('Jumping')
-		  wait()
-		  humanoid:ChangeState('Seated')
-		  end
-	  end
-  end)
-end
- end,
-})
-
---Walk speed slider
-
-local Slider = MainTab:CreateSlider({
- Name = "WalkSpeed Slider",
- Range = {1, 350},
- Increment = 1,
- Suffix = "Speed",
- CurrentValue = 16,
- Flag = "sliderws", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
- Callback = function(Value)
-	  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
- end,
-})
-
---Jump slider
-
-local Slider = MainTab:CreateSlider({
- Name = "JumpPower Slider",
- Range = {1, 350},
- Increment = 1,
- Suffix = "Speed",
- CurrentValue = 16,
- Flag = "sliderjp", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
- Callback = function(Value)
-	  game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
- end,
-})
