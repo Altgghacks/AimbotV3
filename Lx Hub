@@ -82,7 +82,7 @@ _G.HeadSize = 20 _G.Disabled = true game:GetService('RunService').RenderStepped:
                             local torso = v.Character:FindFirstChild("Torso") or v.Character:FindFirstChild("UpperTorso")
                             if torso then
                                 torso.Size = _G.TorsoSize
-                                torso.Transparency = 0.97
+                                torso.Transparency = 0.4
                                 torso.BrickColor = BrickColor.new("Red")
                                 torso.Material = "Neon"
                                 torso.CanCollide = false
@@ -138,7 +138,7 @@ local function toggleNoclip()
     end
 end
  
-local function createTool()-
+local function createTool()
     local tool = Instance.new("Tool")
     tool.Name = "Noclip Tool"
     tool.RequiresHandle = false
