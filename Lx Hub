@@ -3,7 +3,7 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-	Name = "Lx Hub│Aimbot│V2",
+	Name = "Lx Hub│AiVmbot│2",
 	LoadingTitle = "Script loading...",
 	LoadingSubtitle = "by ZpG",
 	ConfigurationSaving = {
@@ -66,6 +66,12 @@ local Button = MainTab:CreateButton({
 	    -- you can also enable collision, change expand part (head to torso), change transparency and size as well
 _G.HeadSize = 20 _G.Disabled = true game:GetService('RunService').RenderStepped:connect(function() if _G.Disabled then for i,v in next, game:GetService('Players'):GetPlayers() do if v.Name ~= game:GetService('Players').LocalPlayer.Name then pcall(function() v.Character.Head.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize) v.Character.Head.Transparency = 0.97 v.Character.Head.BrickColor = BrickColor.new("White") v.Character.Head.Material = "Neon" v.Character.Head.CanCollide = false v.Character.Head.Massless = true end) end end end end)
     end,
+ })
+ local Button = MainTab:CreateButton({
+	Name = "Head Hitbox 📦│Works in Bridge duels lol",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Altgghacks/Hitbox2/refs/heads/main/Lx%20Hub"))()
+	end,
  })
 
  local Button = MainTab:CreateButton({
